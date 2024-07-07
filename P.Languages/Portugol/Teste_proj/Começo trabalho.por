@@ -37,15 +37,18 @@ programa
 	inteiro ItemStorage_QUANTITY[58] 
 	logico CarregouItem = falso
 	inteiro tela_ItemStorage = 1
+	inteiro ISnumba = 0
+	inteiro ola = 0
 
 	cadeia BAG_LIST[58]
 	inteiro BAG_QUANTITY[58] 
 	logico BAG_CarregouItem = falso
 	inteiro tela_BAG = 1
+	inteiro Bnumba = 0
 	
 	funcao inicio()
 	{	
-		ItemStorage_ADD("",0,0)
+		ItemStorage_ADD("POTION",1001,1)
 		BAG_ADD("",0,0)	
 		graf.iniciar_modo_grafico(falso)
 	     graf.definir_dimensoes_janela(x_tela, y_tela)
@@ -92,10 +95,8 @@ programa
 	}
 	funcao atualizador(inteiro tecla){
 		inteiro caracteres = txt.numero_caracteres(palavra)
-		se(tecla == tec.TECLA_BACKSPACE){
-			se(caracteres >=1){
-				palavra = txt.extrair_subtexto(palavra, 0, caracteres - 1)
-			}	
+		se(tecla == tec.TECLA_BACKSPACE e caracteres >=1){
+			palavra = txt.extrair_subtexto(palavra, 0, caracteres - 1)
 		}
 		senao{
 			palavra = palavra + tec.caracter_tecla(tecla)
@@ -256,6 +257,7 @@ programa
 	funcao gLeia(inteiro x,inteiro y){
 		inteiro caracteres = txt.numero_caracteres(palavra)
 		tecla = tec.ler_tecla()
+		
 		se((tecla >= tec.TECLA_A e tecla <= tec.TECLA_Z) ou (tecla >= tec.TECLA_0 e tecla <= tec.TECLA_9) ou tecla == tec.TECLA_BACKSPACE ou tecla == tec.TECLA_ESPACO){
 					
 				se(situa =="start"){
@@ -341,17 +343,28 @@ programa
 				
 			     
 			}
-	
-	
-	
-
-
-
-
-
+	}
+	funcao TakeItem(inteiro x,inteiro y,cadeia BorS){
+		inteiro caracteres = txt.numero_caracteres(palavra)
+		tecla = tec.ler_tecla()
+		se((tecla >= tec.TECLA_0 e tecla <= tec.TECLA_9) ou tecla == tec.TECLA_BACKSPACE){
+			
+				atualizador(tecla)
+				se(situa == "ITEM-->BAG"){
+					screen_ItemStorage(tela_ItemStorage)
+					graf.desenhar_texto(950,680,ItemStorage_LIST[ISnumba]+" "+ola)	
+				}
+                  	 	
+                   	definir(graf.COR_VERDE,100,"Times New Roman")
+                   	graf.desenhar_texto(x,y,palavra)
+                   	graf.renderizar()
+                   	caracteres = txt.numero_caracteres(palavra)
 
 			
 
+			
+		}
+		
 	}
 	funcao screen_briga(cadeia word1,cadeia word2,cadeia word3,cadeia word4){
 		graf.definir_cor(graf.COR_BRANCO)
@@ -379,30 +392,15 @@ programa
 		graf.renderizar()
 		palavra = ""
 		enquanto(situa == "CMC"){
-			
 			gLeia(755,850)
-
-
-
 			se(palavra == "FODASE"){
 				situac("PROF") 
 				prof(1)
-				
 			}
-			 
-
-			
 		}
-		
-		
-
-
-		
 	}
 	funcao prof(inteiro moment){
-		
 		se(moment == 1){
-			
 			escrevaLentin(0,4,">Olá!Que bom te ver aqui!",50,100)
 			tecla = tec.ler_tecla()
 			se(tecla == tec.TECLA_ENTER){
@@ -862,12 +860,14 @@ programa
 		}
 	}
 	funcao BAG_STORAGE(inteiro loc,inteiro quant,inteiro bot){
+		cadeia jonas = ""
 		se(bot == 0){
-			se(quant <= ItemStorage_QUANTITY[loc]){
+			se(quant <= ItemStorage_QUANTITY[loc] e quant != 0){
+				 jonas = ItemStorage_LIST[loc] 
 				 ItemStorage_ADD(ItemStorage_LIST[loc],loc,ItemStorage_QUANTITY[loc] - quant)
-				 BAG_ADD(ItemStorage_LIST[loc],loc,quant)
+				 BAG_ADD(jonas,loc,quant)
 			}
-			senao{
+			senao se(quant <= 0){
 				escreva("\n\nERRO, VOCÊ TENTOU RETIRAR UMA QUANTIDADE MAIOR DO QUE VOCÊ PODIA\n\n")
 			}
 		}
@@ -898,13 +898,16 @@ programa
 	}
 	funcao ItemStorage(){
 		logico ItemTaking = verdadeiro
+		logico sure
 		tela_ItemStorage = 1
 		situa = "ITEM-->BAG"
+		inteiro caracteres = 0
 		enquanto(ItemTaking == verdadeiro){
 			gLeia(890,560)
 			se(tecla == tec.TECLA_ENTER){
 				se(palavra == "SAIR"){
 					ItemTaking = falso
+					situa = "leavetest"
 				}
 				se(palavra == "UM"){
 					tela_ItemStorage = 1
@@ -913,8 +916,31 @@ programa
 					tela_ItemStorage = 2
 				}
 				para(inteiro i = 0+(29*(tela_ItemStorage-1)) ;i <29*tela_ItemStorage;i++){
-					se(palavra == tp.inteiro_para_cadeia(i,2)){
-						
+					se(palavra == tp.inteiro_para_cadeia(i,10)){
+						sure = verdadeiro
+						ISnumba = i
+						ola = 0
+						enquanto(sure == verdadeiro){
+							TakeItem(890,590,"B")
+							caracteres = txt.numero_caracteres(palavra)
+							se(caracteres >0){
+								ola = tp.cadeia_para_inteiro(palavra, 10)
+							}
+							se(tecla == tec.TECLA_ENTER){
+								se(ola > ItemStorage_QUANTITY[ISnumba] ou ola == 0){
+									graf.desenhar_texto(0,0,"ERRO")
+								}
+								senao{
+									BAG_STORAGE(ISnumba,ola,0)
+									escreva(BAG_LIST[ISnumba],ItemStorage_LIST[ISnumba])
+									escreva("\n",BAG_QUANTITY[ISnumba],ItemStorage_QUANTITY[ISnumba])
+									i = 29*tela_ItemStorage
+									palavra = ""
+									ola = 0
+									sure = falso
+								}
+							}
+						}
 					}
 				}				
 			}
@@ -927,9 +953,9 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 21955; 
+ * @POSICAO-CURSOR = 22109; 
  * @PONTOS-DE-PARADA = ;
- * @SIMBOLOS-INSPECIONADOS = {ItemStorage_LIST, 36, 8, 16};
+ * @SIMBOLOS-INSPECIONADOS = {ItemStorage_LIST, 36, 8, 16}-{ola, 41, 9, 3}-{BAG_LIST, 43, 8, 8};
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
  * @FILTRO-ARVORE-TIPOS-DE-SIMBOLO = variavel, vetor, matriz, funcao;
  */

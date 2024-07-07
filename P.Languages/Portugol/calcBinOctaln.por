@@ -7,7 +7,7 @@ programa
 		inteiro valoroctal = 0, valordec, contador = -1
 		escreva("Me informe um valor em decimal para traduzir para Binário e Octal.\n")
 		leia(valordec)
-		para(inteiro i = 2 ; i <= 4098;i *= 2){
+		para(inteiro i = 2 ; i <= 4096;i *= 2){
 			contador++
 			se(valordec%i >= i/2){
 				
