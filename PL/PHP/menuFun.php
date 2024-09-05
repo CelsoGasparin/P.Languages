@@ -4,14 +4,14 @@
 
 
 
-MontarTabela("So","it","Actually","works????","guess so");
+MontarMenu("So","it","Actually","works????","guess so");
 
 
 
 
 
 
-function MontarTabela(...$itens){
+function MontarMenu(...$itens){
     array_unshift($itens,"Sair");
     $sizeTab = strlen($itens[0]);
     foreach($itens as $item){
@@ -21,7 +21,7 @@ function MontarTabela(...$itens){
         }
     }
     $sizeTab += 3; 
-    $sizeInte = $sizeTab+4;//O Número PRECISA ser maior que 3
+    $sizeInte = $sizeTab+4;
     print str_repeat("=",$sizeInte)."\n";
     
     $qtdItens = count($itens);
