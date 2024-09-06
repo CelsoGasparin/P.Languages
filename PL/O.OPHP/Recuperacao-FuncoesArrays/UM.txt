@@ -1,0 +1,33 @@
+Esses dois tipos de estruturas são Associativos e Indexados.
+
+
+Associativos- Um array associativo é uma estrutura de dados composta por itens formados 
+por uma chave, que é definida pelo usuário, e um valor, no qual cada chave tem um valor
+ associado a ela. Cada chave só pode aparecer uma vez.
+EX:
+$FrutaCor = [
+    "Banana" => "amarela",
+    "Laranja" => "laranja",
+    "Morango" => "vermelho",
+];
+
+
+Indexados- Um array indexado é uma estrutura de dados composta por itens formados por uma
+chave e um valor. A diferença desse tipo de array para um associativo é o detalhe de que 
+o usuário apenas entrega o valor e a linguagem determina a chave. O primeiro valor dado 
+a chave é 0 e a cada item criado essa chave sobe por um.
+EX:
+<?php
+   $numbers = array(1, 2, 3, 4, 5);
+
+   for ($i=0; $i<count($numbers); $i++){
+      echo "numbers[$i] = $numbers[$i] \n";
+   }
+   
+?>
+O resultado seria:
+numbers[0] = 1 
+numbers[1] = 2 
+numbers[2] = 3 
+numbers[3] = 4 
+numbers[4] = 5 
