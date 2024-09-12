@@ -1,5 +1,15 @@
 <?php
 
+require "/home/lab/fun/menuFun.php";
+
+
+$teste = ["teste","teste"];
+arrayMenu($teste);
+
+
+
+
+
 Atv3(50,1);
 
 
