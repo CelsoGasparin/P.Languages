@@ -607,7 +607,7 @@ function rightCard($ans,$aCarta,$jogador,array $cartas){//Checka se voce acertou
     if($ans == $aCarta+1){
 
         system('clear');
-        montarMenu(false,"CORRETO!Player ".$jogador->getNome()." ganhou $".(10*$GLOBALS['tentativas'])/$GLOBALS['valueDica']." Pontos");
+        montarMenu(false,"CORRETO!Player ".$jogador->getNome()." ganhou $".(25*$GLOBALS['tentativas'])/$GLOBALS['valueDica']." Pontos");
         $jogador->addPontos( (10*$GLOBALS['tentativas'])/$GLOBALS['valueDica'] );
         $jogador->addPartidas(1,1);
         //$cartas = [];por alguma razão não funcionou
@@ -694,3 +694,6 @@ function montarMenu(bool $sair = true,...$itens){
     }
 
 }
+
+
+
