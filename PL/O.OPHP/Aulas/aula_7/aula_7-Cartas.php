@@ -237,7 +237,7 @@ $qtdCartasDEFINITIVO = 7;
 
 $cartas = [];
 $LojaSkills = ["Deletar Carta","Revelar Carta","Reescolher Carta",$nomeBaralhos[$defaultB+1],"???"];
-$precos = [65,95,45,10,145];
+$precos = [45,75,35,10,105];
 $opcoesInic = ["Jogar","Stats","Loja"];
 
 
@@ -543,15 +543,6 @@ while(true){
     }elseif($opValue == 0){
         break;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
 }
 
