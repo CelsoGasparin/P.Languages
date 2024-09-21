@@ -1,6 +1,7 @@
 <?php
 
-require "/home/lab/fun/menuFun.php";//https://github.com/CelsoGasparin/P.Languages/blob/main/PL/PHP/menuFun.php
+//require "/home/lab/fun/menuFun.php";Esse é pra usar no pc da sala    https://github.com/CelsoGasparin/P.Languages/blob/main/PL/PHP/menuFun.php
+require "/home/omelby/fun/all.php";
 
 class Receita{
     private string $descricao;

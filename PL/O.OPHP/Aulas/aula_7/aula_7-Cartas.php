@@ -15,7 +15,7 @@ class Player{
         
         $this->nome = $n;
         $this->habilidades[] = "Dica";
-        $this->pontos = 1000;
+        $this->pontos = 0;
         $this->partidas[0] = 0;
         $this->partidas[1] = 0;
 
@@ -237,7 +237,7 @@ $qtdCartasDEFINITIVO = 7;
 
 $cartas = [];
 $LojaSkills = ["Deletar Carta","Revelar Carta","Reescolher Carta",$nomeBaralhos[$defaultB+1],"???"];
-$precos = [50,80,30,10,100];
+$precos = [65,95,45,10,145];
 $opcoesInic = ["Jogar","Stats","Loja"];
 
 
@@ -257,6 +257,12 @@ while(true){
     
     
     if($opValue == 1){
+        system('clear');
+        montarMenu(false,"AVISO!");
+        sleep(1);
+        system('clear');
+        montarMenu(false,"AVISO!Para escolher a carta digite o numero a esquerda Dela!");
+        sleep(4);
         $qtdCartas = $qtdCartasDEFINITIVO;
         $cartas = [];
         $repsW = 0;
@@ -270,9 +276,12 @@ while(true){
             $validDeck = validCard($cartas);
             if($validDeck == false){
                 $i--;
+                
             }
             
         }
+        
+        
         $aCarta = array_rand($cartas,1);
         $dica = $cartas[$aCarta]->getDica();
         $cartaSkills = $cartas;
@@ -290,7 +299,7 @@ while(true){
             system('clear');
             arrayMenu(false,$cartas);
             
-            print $aCarta;
+            //print $aCarta;
             $opValue = readline();
             if($opValue <= $qtdCartas){
                 if(rightCard($opValue,$aCarta,$jogador,$cartas)){
@@ -302,11 +311,11 @@ while(true){
                     arrayMenu(true,$jogador->getHabilidades());
                     $opValue = readline();
                     if($opValue > 0){
-                        if($jogador->getHabilidades()[$opValue-1] == "Dica" and $valueDica > 0){
+                        if($jogador->getHabilidades()[$opValue-1] == "Dica" and $valueDica <= 1){
                             while(true){
                                 system('clear');
                                 montarMenu(true,"Sua dica sobre a carta escolhida e essa:".$dica);
-                                $valueDica--;
+                                $valueDica++;
                                 $opValue = readline();
                                 if($opValue == 0){
                                     break;
@@ -348,11 +357,19 @@ while(true){
 
 
                             }while($opValue > $qtdCartas);
-                        }elseif(in_array("Reescolher Carta",$jogador->getHabilidades()) and $jogador->getHabilidades()[$opValue-1] == "Reescolher Carta"){
+                        }elseif(in_array("Reescolher Carta",$jogador->getHabilidades()) 
+                        and $jogador->getHabilidades()[$opValue-1] == "Reescolher Carta"
+                        and $valueREE  <= 1){
                             system('clear');
                             montarMenu(false,"Carta foi Reescolhida");
                             $aCarta = rand(0,$qtdCartas-1);
                             sleep(3);
+                            $valueREE++;
+                            if($valueDica > 1){
+                                $valueDica--;
+                                $dica = $cartas[$aCarta]->getDica();    
+                            }
+                            
                         }
                     }elseif($opValue == 0){
                         break;
@@ -424,7 +441,7 @@ while(true){
 
 
         }
-    }elseif($opValue == 4){
+    }elseif($opValue == 4 and $opcoesInic[$opValue-1] == "Apostas"){//eu não sei fazer um sistema que me agrada de apostas(APOSTA EM TERMINAL NEM FAZ SENITDO)
         system('clear');
         montarMenu(false,"Bem Vindo!");
         sleep(1);
@@ -433,10 +450,98 @@ while(true){
         sleep(3);
         
         while(true){
+            
             system('clear');
             montarMenu(true,"Jogar");
+            $opValue = readline();
+            if($opValue == 1){
+                
+                system('clear');
+                montarMenu(false,"Olá amigo!");
+                sleep(2);
+                system('clear');
+                montarMenu(false,"Olá amigo!Estou prestes a explicar o jogo!");
+                sleep(3);
+                system('clear');
+                montarMenu(false,"(que vai te roubar)");
+                usleep(450);
+                system('clear');
+                montarMenu(false,"Existem 100 casas disponiveis e voce podera escolher entre 1 e 50 delas!");
+                sleep(4);
+                system('clear');
+                montarMenu(false,"Depois de escolher suas casas, voce escolhera a quantidade de rodadas que voce vai jogar!");
+                sleep(4);
+                system('clear');
+                montarMenu(false,"A cada rodada o jogo escolher uma casa. se o jogo escolher uma casa sua, voce ganha!");
+                sleep(4);
+                system('clear');
+                montarMenu(false,"O quanto voce ganha depende de quantos pontos voce colocar no jogo.");
+                sleep(3);
+                system('clear');
+                montarMenu(false,"AGORA! Que comecem os jogos.");
+                sleep(1);
+                $acertos = 0;
+                $casasAcertos = [];
+                do{
+                   system('clear');
+                    $casas = readline("Quantas casas quer Comprar?");
+                }while($casas <= 0 or $casas > 50);
+                do{
+                    system('clear');
+                    print "AVISO!Você não pode gastar mais doque você tem!(você já deve saber)\n-----------\n";
+                    $rodadas = readline("Quantas rodadas você que jogar?");
+                    $pontosPerdidos = readline("Quantos pontos você quer jogar por rodada?");
+                    $pontosGastos = $rodadas*$pontosPerdidos;
+                }while($pontosGastos > $jogador->getPontos() or $rodadas > 100);
+                for($i=0; $i < $rodadas; $i++){ 
+                    
+                    $casasJogo[$i] = rand(1,100);
+                    $validCasa = validCard($casasJogo);
+                    if($validCasa == false){//to usando a funcao de nao repetir carta porque na pratica é uma funcao de nao repetir nada em array
+                        $i--;
+                                                  
+                        //print validCard($casasJogo)."\n";                
+                    }
+                }
+                //print_r($casasJogo);
+                
+                $valorMulti = (100/$casas)*1.3;
+                $valorGanho = $pontosPerdidos*$valorMulti;
+                foreach($casasJogo as $casaJogo){
+                    if($casaJogo <= $casas){
+                        $acertos++;
+                        $casasAcertos[] = $casaJogo;
+                        
+                    }
+                }
+                sort($casasAcertos);
+                $valorGanho *= $acertos;
+                $lucro = $valorGanho-$pontosGastos;
+                $jogador->addPontos(-$pontosGastos);
+                $jogador->addPontos(round($valorGanho));
+                while(true){
+                    system('clear');
+                    montarMenu(true);
+                    print "Casas Acertadas:\n";
+                    foreach($casasAcertos as $casaAcerto){
+                        print"[Casa]- ". $casaAcerto."\n";
+                    }
+                    print "{Pontos Ganhos}~ ". $lucro."\n";
+                    //print $pontosGastos."\n".$valorGanho;
+                    $opValue = readline();
+                    if($opValue == 0){
+                        break;
+                    }
+                }
+                
+
+            }elseif($opValue == 0){
+                break;
+            }
         }
 
+    }elseif($opValue == 0){
+        break;
     }
     
     
@@ -476,12 +581,16 @@ function trocarBaralho(&$defaultB , $limite){//Muda o Baralho disponivel na Loja
 
 function validCard(array $Deck){//Checka se a carta não repete
 
-    $repCard = $Deck [0];
-    unset($Deck[0]);//remove o item do array
+    $repCard = end($Deck);
+    $reps = 0;
+    
     foreach($Deck as $card){
         if($repCard == $card){
-            return false;
+            $reps++;
         }
+    }
+    if($reps >= 2){
+        return false;
     }
     return true;
 
