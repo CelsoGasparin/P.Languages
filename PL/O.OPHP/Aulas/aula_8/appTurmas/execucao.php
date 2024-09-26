@@ -1,7 +1,7 @@
 <?php
 
 require_once "model/Aluno.php";
-
+require_once "/home/lab/fun/menuFun.php";
 
 
 
@@ -13,16 +13,20 @@ $alunos = [];
 for($i=0; $i < 5; $i++){ 
     system('clear');
     montarMenu(false,"Turma Disponivel: ".$turma->getNome());
+    print "------ALUNO".$i+1 ."------\n";
     $alunos[] = new Aluno(readline("Qual o nome do Aluno?"),
     readline("Qual a idade do Aluno?"),readline("Qual o nome da Turma do aluno?"));
 
 
 }
 //print_r($alunos);
+//print_r($turma);
+
+
 
 foreach($alunos as $aluno){
 
-    if(isset($aluno->getTurma()) and $aluno->getTurma()->getNome() == $turma->getNome()){
+    if($aluno->issetTurma() and $aluno->getTurma()->getNome() == $turma->getNome()){
         print "[Nome]- ". $aluno->getNome().
         "\n[Idade]- ". $aluno->getIdade(). " Anos";
         print "\n----------\n";
@@ -39,7 +43,7 @@ foreach($alunos as $aluno){
 
 
 
-
+/*
 function arrayMenu(bool $sair = true,array $itens){
     array_unshift($itens,"Sair");
     $sizeTab = strlen($itens[0]);
@@ -90,4 +94,4 @@ function montarMenu(bool $sair = true,...$itens){
         print str_repeat("=",$sizeInte)."\n";
     }
 
-}
+}*/

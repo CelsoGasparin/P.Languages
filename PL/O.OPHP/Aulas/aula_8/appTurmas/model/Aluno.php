@@ -16,9 +16,10 @@ class Aluno {
 
         $this->nome = $nm;
         $this->idade = $id;
-        foreach($GLOBALS['turmas'] as $turma){
-            if(str_contains($turma->getNome(),$tur)){
+        foreach($GLOBALS['turmas'] as $key=>$turma){
+            if(str_contains($turma->getNome(),$tur) or $tur == $key+1){
                 $this->turma = $turma;
+                $turma->addAluno($this);
             }
 
         }
@@ -84,4 +85,15 @@ class Aluno {
 
         return $this;
     }
+    public function issetTurma(){
+
+        if(isset($this->turma)){
+            return true;
+        }else{
+            return false;
+        }
+
+
+    }
+
 }

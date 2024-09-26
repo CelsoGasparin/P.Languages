@@ -80,4 +80,9 @@ class Turma {
 
         return $this;
     }
+    public function addAluno($v){
+
+        $this->alunos[] = $v;
+
+    }
 }
