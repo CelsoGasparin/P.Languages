@@ -21,7 +21,7 @@ while(true){
 
     switch($opValue){
         case 1:
-            
+            //organizar isso aqui vai ser o inferno
             system('clear');
             print "+MARCAS DISPONÍVEIS+\n";
             arrayMenu(false,$listaFabs);
@@ -29,14 +29,12 @@ while(true){
             do{
                 $anoFab = readline("Quando foi Fabricado?");
             }while(is_numeric($anoFab) == false);
-            $carros[] = new Carro($modelo,$anoFab);
-
+            $carro = new Carro($modelo,$anoFab);
             do{
-                $fabri = readline("Qual a Fabricante do Carro?");
-
-                
+                $fabri = readline("Qual a Fabricante do Carro?");                
             }while(validFab($fabri,$geralFabricantes) == false);
-
+            $carro->setFabricante(findFab($fabri,$geralFabricantes));//encontra e retorna o fabricante
+            $carros[] = $carro;
 
         break;
         
@@ -96,25 +94,26 @@ function listarFabs(array $fabs){
     return $dispoFabs;
 
 }
-function findFab($fabri,array $fabs,Carro $carro){
+function findFab($fabri,array $fabs,/*Carro $carro*/){
 
     foreach($fabs as $key => $fabricante){
         if(strtolower($fabri) == strtolower($fabricante->getNome())
          or strtolower($fabri) == strtolower($fabricante->getSigla())
          or $fabri == $key+1 ){
-            $carro->setFabricante($fabricante); 
-            break;
+            //$carro->setFabricante($fabricante); 
+            return $fabricante;
         }
     }
-
+    return null;
 
 
 }
-function validFab($fab, array $fabs){
+function validFab($fab, array $fabs/*,Carro $carro*/){
     foreach($fabs as $key => $fabricante){
         if(strtolower($fab) == strtolower($fabricante->getNome()) 
         or strtolower($fab) == strtolower($fabricante->getSigla()) 
         or $fab == $key+1 ){
+            //$carro->setFabricante($fabricante);
             return true;
         }
     }
