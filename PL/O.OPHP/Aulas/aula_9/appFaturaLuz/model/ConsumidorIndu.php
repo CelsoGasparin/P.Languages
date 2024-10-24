@@ -8,6 +8,7 @@ class Industrial implements iConsumidorEnergia{
     private $limite;
     private $gasto;
     private $gastoPosLimite;
+    // private array $consumos;
 
     //__construct
     public function __construct(){
@@ -17,6 +18,7 @@ class Industrial implements iConsumidorEnergia{
         $this->gastoPosLimite = 2.30;
 
     }
+    
     
 
     //methods
@@ -113,4 +115,6 @@ class Industrial implements iConsumidorEnergia{
 
         return $this;
     }
+
+    
 }

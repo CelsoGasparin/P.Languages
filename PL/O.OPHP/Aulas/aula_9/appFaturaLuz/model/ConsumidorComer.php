@@ -8,6 +8,7 @@ class Comercial implements iConsumidorEnergia{
     private $limite;
     private $gasto;
     private $gastoPosLimite;
+    // private array $consumos;
 
     //__construct
     public function __construct(){
@@ -113,4 +114,21 @@ class Comercial implements iConsumidorEnergia{
 
         return $this;
     }
+
+    // /**
+    //  * Get the value of consumos
+    //  */
+    // public function getConsumos($key){
+    //     return $this->consumos[$key];
+    // }
+
+    // /**
+    //  * Set the value of consumos
+    //  */
+    // public function setConsumos($consumos): self
+    // {
+    //     $this->consumos[] = $consumos;
+
+    //     return $this;
+    // }
 }

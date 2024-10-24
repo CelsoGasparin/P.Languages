@@ -8,6 +8,7 @@ class Residencial implements iConsumidorEnergia{
     private $limite;
     private $gasto;
     private $gastoPosLimite;
+    // private array $consumos;
 
     //__construct
     public function __construct(){
