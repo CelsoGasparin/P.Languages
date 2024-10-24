@@ -3,14 +3,6 @@ require_once 'contemAcento.php';
 
 
 
-
-
-
-
-montarMenu(true,"Pão de batata","OI","áàããÂÃÁÁÀéÈẽÊ",);
-
-
-
 function arrayMenu(bool $sair = true,array $itens){
     array_unshift($itens,"Sair");
     $sizeTab = strlen($itens[0]);
@@ -26,7 +18,7 @@ function arrayMenu(bool $sair = true,array $itens){
     
     $qtdItens = count($itens);
     for($i = 1;$i < $qtdItens;$i++){
-        print "[$i-".$itens[$i].str_repeat(" ",$sizeTab - (strlen($itens[$i])+strlen($i)))."]\n";
+        print "[$i-".$itens[$i].str_repeat(" ",$sizeTab - (strlen($itens[$i])+strlen($i))).str_repeat(" ",contemAcento($itens[$i]))."]\n";
         print str_repeat("=",$sizeInte)."\n";
     }
     if($sair){
@@ -46,16 +38,15 @@ function montarMenu(bool $sair = true,...$itens){
         }
     }
 
-    $sizeTab += 4; 
+    $sizeTab += 3; 
     $sizeInte = $sizeTab+3;
     print str_repeat("=",$sizeInte)."\n";
     
     $qtdItens = count($itens);
     for($i = 1;$i < $qtdItens;$i++){
         
-        
-        
-        print "[$i-".$itens[$i].str_repeat(" ",$sizeTab - (strlen($itens[$i])+strlen($i)))."]\n";
+
+        print "[$i-".$itens[$i].str_repeat(" ",$sizeTab - (strlen($itens[$i])+strlen($i))).str_repeat(" ",contemAcento($itens[$i]))."]\n";
         print str_repeat("=",$sizeInte)."\n";
         
     }
