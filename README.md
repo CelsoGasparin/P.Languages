@@ -1,5 +1,5 @@
 # P.Language
 
 
-oi
-socorro isso é muito portugol
+repositório da bagunça
+
