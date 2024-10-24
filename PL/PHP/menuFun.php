@@ -7,7 +7,7 @@ require_once 'contemAcento.php';
 
 
 
-montarMenu(true,"Pão de batata","OI","áàããÂÃÁÁÀéÈẽÊI",);
+montarMenu(true,"Pão de batata","OI","áàããÂÃÁÁÀéÈẽÊ",);
 
 
 
@@ -40,7 +40,7 @@ function montarMenu(bool $sair = true,...$itens){
     $sizeTab = strlen($itens[0]);
 
     foreach($itens as $item){
-        $aSize =strlen($item) + contemAcento($item);
+        $aSize =strlen($item);
         if($sizeTab < $aSize){
             $sizeTab = $aSize;
         }
@@ -53,7 +53,8 @@ function montarMenu(bool $sair = true,...$itens){
     $qtdItens = count($itens);
     for($i = 1;$i < $qtdItens;$i++){
         
-
+        
+        
         print "[$i-".$itens[$i].str_repeat(" ",$sizeTab - (strlen($itens[$i])+strlen($i)))."]\n";
         print str_repeat("=",$sizeInte)."\n";
         
