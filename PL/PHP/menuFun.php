@@ -3,6 +3,11 @@ require_once 'contemAcento.php';
 
 
 
+
+
+
+
+
 function arrayMenu(bool $sair = true,array $itens){
     array_unshift($itens,"Sair");
     $sizeTab = strlen($itens[0]);

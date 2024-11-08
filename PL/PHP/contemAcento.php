@@ -17,7 +17,8 @@ function contemAcento($string){
         'é','è','ẽ','ê','É','È','Ẽ','Ê',
         'í','ì','ĩ','î','Í','Ì','Ĩ','Î',
         'ó','ò','õ','ô','Ó','Ò','Õ','Ô',
-        'ú','ù','ũ','û','Ú','Ù','Ũ','Û'
+        'ú','ù','ũ','û','Ú','Ù','Ũ','Û',
+        '´','`','~','^','ç'
     ];
     // print_r($acentos);
     for($i=0; $i < $iLen; $i++){ 
@@ -35,19 +36,30 @@ function contemAcento($string){
 }
 
 function validCharac($string){
+    $strLen = strlen($string);
+    print $strLen;
+    $valid = 0;
+    $string = strtolower($string);
     $texto = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
              ,' ',',','.',':',';','?','<','>','!','$','#','*','(',')','¨','%','@','"',"'",'[',']','|','/','{','}','\\'
              ,'0','1','2','3','4','5','6','7','8','9','+','-','ç','_','='];
     foreach($texto as $key => $value) {
-        if(str_contains(strtolower($string),$value)){
-            return true;
+        if(str_contains($string,$value)){
+            $valid += repeatCharac($string,$value);
         }
     }
-    return false;
+    if($acentos = contemAcento($string)){
+        $valid += $acentos*2;
+    }
+    print "\n".$valid;
+    if($valid == $strLen and $strLen > 0){
+        return true;
+    }else{
+        return false;
+    }
 }
 
-
-
+print "\n".validCharac('´~');
 
 
 
@@ -126,4 +138,19 @@ function removerAcento(string $string){
     }
     
     return $actualString;
+}
+
+function repeatCharac(string $string,$oi){
+    $strLen = strlen($string);
+    $strArray = [];
+    $repeats = 0;
+    for($i=0; $i < $strLen; $i++){ 
+        $strArray[] = substr($string,$i,1);
+    }
+    // print_r($strArray);
+    foreach($strArray as $key=>$strValue){
+        $strValue == $oi ? $repeats++ : null;
+    }
+
+    return $repeats;
 }
