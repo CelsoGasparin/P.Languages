@@ -13,7 +13,7 @@ class PontoTuristico extends Espaco{
     public function getDadosPontoTuristico(){
         return"[Nome]- ". $this->nome
              ."\n[Endereço]- ".$this->endereco
-             ."\n[Duração da Visita]- ".$this->duracaoDaVista;
+             ."\n[Duração da Visita]- ".$this->duracaoDaVista."H";
     }
 
 
