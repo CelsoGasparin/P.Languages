@@ -11,7 +11,9 @@ class ClienteDAO{
     public static function inserirCliente(Cliente $cliente){
 
         $sql = "INSERT INTO clientes(".'"'.$cliente->getTipo().'"'.
-        ",".'"'.$cliente->getNomeSocial().'"'.")";
+        ",".'"'.$cliente->getNomeSocial().'"'.
+        ",".'"'.$cliente->getEmail().'"'.
+        ",".'"'.$cliente->getIdentificacao().'"'.")";
 
 
 
