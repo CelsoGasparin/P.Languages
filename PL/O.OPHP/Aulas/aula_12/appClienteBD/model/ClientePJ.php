@@ -16,7 +16,7 @@ class ClientePJ extends Cliente{
         return $this->cnpj;
     }
     public function  getTipo(){
-        return "Pessoa Juridica";
+        return "J";
     }
 
 

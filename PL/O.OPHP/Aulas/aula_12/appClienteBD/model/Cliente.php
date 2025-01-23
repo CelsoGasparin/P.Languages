@@ -17,6 +17,26 @@ abstract class Cliente {
     abstract public function getNroDoc();
 
 
+    
+    public function getCnpj(){
+        return null;
+    }
+    public function getRazaoSocial(){
+        return null;
+    }
+    public function getNome(){
+        return null;
+    }
+    public function getCpf(){
+        return null;
+    }
+
+
+
+
+
+
+
 
     /**
      * Get the value of id
@@ -71,4 +91,5 @@ abstract class Cliente {
 
         return $this;
     }
+
 }

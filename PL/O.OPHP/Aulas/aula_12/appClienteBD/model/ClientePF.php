@@ -18,7 +18,7 @@ class ClientePF extends Cliente{
         return $this->nome;
     } 
     public function getTipo(){
-        return "Pessoa Fisica";
+        return "F";
     }
 
 
