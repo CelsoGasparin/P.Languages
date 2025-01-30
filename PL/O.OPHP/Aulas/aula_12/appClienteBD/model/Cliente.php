@@ -5,7 +5,7 @@
 
 abstract class Cliente {
     
-    protected int $id;
+    protected $id;
     protected string $nomeSocial;
     protected string $email;
 

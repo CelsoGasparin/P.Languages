@@ -8,6 +8,34 @@ class ClientePJ extends Cliente{
     private string $cnpj;
 
     
+    //__construct
+    public function __construct($BD,$id = null,$nSo = null,$ema = null,$rSo = null,$cp = null){
+        if($BD){
+            $this->id = $BD['id'];
+            $this->nomeSocial = $BD['nome_social'];
+            $this->email = $BD['email'];
+            $this->razaoSocial = $BD['razao_social'];
+            $this->cnpj = $BD['cnpj'];
+            return null;
+        }
+        $this->id = $id;
+        $this->nomeSocial = $nSo;
+        $this->email = $ema;
+        $this->razaoSocial = $rSo;
+        $this->cnpj = $cp; 
+    }
+    //__toString
+    public function __toString(){
+        return "[ID]- ".$this->id."\n".
+        "[Tipo]- Pessoa Física\n".
+        "[RazãoSocial]- ".$this->razaoSocial."\n".
+        "[CNPJ]- ".$this->cnpj."\n".
+        "[NomeSocial]- ".$this->nomeSocial."\n".
+        "[Email]- ".$this->email."\n";
+    }
+
+
+
 
     public function getIdentificacao(){
         return $this->razaoSocial;
