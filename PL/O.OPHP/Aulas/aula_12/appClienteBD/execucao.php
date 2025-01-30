@@ -58,7 +58,8 @@ while(true){
             // $cliente->setNomeSocial(readline('Qual o nome social do cliente?'));
             // $cliente->setCNPJ(readline('Qual o CNPJ do cliente?'));
             // $cliente->setEmail(readline('Qual o email do cliente?'));
-            $cliente = new ClientePJ(null,null,$nomeSocial,$email,$razaoSocial,$cnpj);
+            $cliente = new ClientePJ(null,$nomeSocial,$email,$razaoSocial,$cnpj);
+            
             ClienteDAO::inserirCliente($cliente);
         break;
 
@@ -69,7 +70,7 @@ while(true){
                 montarMenu(true);
                 foreach(ClienteDAO::listarClientes() as $key => $cli){
                     $string = "ClienteP".$cli['tipo'];
-                    $cliente = new $string($cli);
+                    $cliente = new $string(BD: $cli);
                     print $cliente;
                     // print "[ID]- ".$cli['id']."\n";
                     // if($cli['tipo'] == 'F'){
@@ -100,7 +101,7 @@ while(true){
                     system('clear');
                     montarMenu(false,"Pressione qualquer telca para sair(TEM QUE DAR ENTER).");
                     $string = 'ClienteP'.$cliB['tipo'];
-                    $cliB = new $string($cliB);
+                    $cliB = new $string(BD: $cliB);
                     print $cliB;
                     // print "[ID]- ".$cliB['id']."\n";
                     // if($cliB['tipo'] == 'F'){
@@ -137,7 +138,7 @@ while(true){
                             system('clear');
                             montarMenu(true,"Tem certeza que quer Excluir essa Pessoa?");
                             $string = 'ClienteP'.$cliB['tipo'];
-                            $cliB = new $string($cliB);
+                            $cliB = new $string(BD: $cliB);
                             print $cliB;
                             // print "[ID]- ".$cliB['id']."\n";
                             // if($cliB['tipo'] == 'F'){
@@ -154,7 +155,7 @@ while(true){
                             print"--------\n";
                             $excSure = readline();
                             if($excSure == 1){
-                                ClienteDAO::excluirCliente($cliB['id']);
+                                ClienteDAO::excluirCliente($cliB->getId());
                                 break;
                             }
                              

@@ -9,7 +9,7 @@ class ClientePJ extends Cliente{
 
     
     //__construct
-    public function __construct($BD,$id = null,$nSo = null,$ema = null,$rSo = null,$cp = null){
+    public function __construct($id = null,$nSo = null,$ema = null,$rSo = null,$cp = null,$BD = null){
         if($BD){
             $this->id = $BD['id'];
             $this->nomeSocial = $BD['nome_social'];

@@ -12,7 +12,7 @@ class ClientePF extends Cliente{
 
 
     //__construct
-    public function __construct($BD,$id = null,$nSo = null,$ema = null,$nom = null,$cp = null){
+    public function __construct($id = null,$nSo = null,$ema = null,$nom = null,$cp = null,$BD = null){
         if($BD){
             $this->id = $BD['id'];
             $this->nomeSocial = $BD['nome_social'];
