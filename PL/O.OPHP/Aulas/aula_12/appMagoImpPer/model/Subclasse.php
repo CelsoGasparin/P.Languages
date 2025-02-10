@@ -1,7 +1,7 @@
 <?php
 
 require_once "Classe.php";
-require_once "fun/texto.php";
+require_once __DIR__."/../util/texto.php";
 // require_once "TextoFun.php";
 
 // $textoFun = new TextoFun();
@@ -20,7 +20,7 @@ class Subclasse extends Classe{
 
     //methods
     public function getAllSubSkills(){
-        $skills = 'poderes'.clearString($this->nome);
+        $skills = 'poderes'.texto::clearString($this->nome);
         return $skills;
         
     }

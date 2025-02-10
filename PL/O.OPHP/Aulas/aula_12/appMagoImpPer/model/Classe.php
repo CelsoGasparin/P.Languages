@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__."fun/texto.php";
+require_once __DIR__."/../util/texto.php";
 // require_once "TextoFun.php";
 
 // $textoFun = new TextoFun();
@@ -18,7 +18,7 @@ class Classe {
 
     //methods
     public function getAllSkills(){
-        $skills = 'poderes'.clearString($this->descricao);
+        $skills = 'poderes'.texto::clearString($this->descricao);
         return $skills;
         
         

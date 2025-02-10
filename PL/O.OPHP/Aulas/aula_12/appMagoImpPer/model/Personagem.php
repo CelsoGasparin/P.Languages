@@ -19,11 +19,13 @@ class Personagem implements iPersonagem{
     private $ArmaEquipada;
     private $HP;
     private $maxHP;
-
+    private $id;
     
 
     //construct
-    public function __construct($st,$co,$de,$ma,$nom,$cl,array $pods,$aEq){
+    public function __construct($st = null,$co = null,$de = null,$ma = null,$nom = null,$cl = null,array $pods = null,$aEq = null, $BDbool = false,$hp = null,$id = null){
+        
+
         $this->STR = $st;
         $this->CON = $co;
         $this->DEX = $de;
@@ -36,20 +38,26 @@ class Personagem implements iPersonagem{
         $melee["Golpe com Punho"] = new Poder("Golpe com Punho",15,'Atacar','STR');
         $this->poderes = array_merge($pods,$melee);
         $this->maxHP = 0;
-        for($i=0;$i < $this->CON;$i++){ 
-            $dado = rand(200,400);
-            if($dado > $this->maxHP){
-                $this->maxHP = $dado;
-            }            
+        if($BDbool){
+            $this->maxHP = $hp;
+        }else{
+            for($i=0;$i < $this->CON;$i++){ 
+                $dado = rand(200,400);
+                if($dado > $this->maxHP){
+                    $this->maxHP = $dado;
+                }            
+            }
         }
         $this->HP = $this->maxHP;
+        $this->id = $id ? $id : null;
 
     }
 
     //toString
     public function __toString(){
 
-        $result = "[Nome]- ".$this->nome.
+        $result = "[ID]- ".$this->id.
+        "\n[Nome]- ".$this->nome.
         "\n[STR]- ".$this->STR.
         "\n[CON]- ".$this->CON.
         "\n[DEX]- ".$this->DEX.
@@ -345,6 +353,24 @@ class Personagem implements iPersonagem{
     public function setMaxHP($maxHP): self
     {
         $this->maxHP = $maxHP;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     */
+    public function setId($id): self
+    {
+        $this->id = $id;
 
         return $this;
     }
