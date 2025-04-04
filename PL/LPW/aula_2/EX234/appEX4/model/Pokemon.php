@@ -9,11 +9,21 @@ class Pokemon{
 
 
 
-    public function __construct($img,$nam,$typ,$poke){
-        $this->img = $img;
-        $this->name = $nam;
-        $this->type = $typ;
-        $this->pokepedia = $poke;
+    public function __construct($nome){
+        
+        $pok = file_get_contents("https://pokeapi.co/api/v2/pokemon/$nome");;
+        $pok = json_decode($pok,true);
+        // print_r($pok);
+        if(count($pok['types']) >= 2){
+            $type = $pok['types'][0]['type']['name'].' e '.$pok['types'][1]['type']['name'];
+        }else{
+            $type = $pok['types'][0]['type']['name'];
+        }
+            
+        $this->img = $pok['sprites']['other']['official-artwork']['front_default'];
+        $this->name = $pok['name'];
+        $this->type = $type;
+        $this->pokepedia = 'https://pokemondb.net/pokedex/'.$pok['name'];
     }
     
     public function __toString(){
@@ -29,7 +39,7 @@ class Pokemon{
         <td style="border-collapse:collapse;border:1px solid black;">'.$this->type.'</th>
         </tr>
         <tr>
-        <td style="border-collapse:collapse;border:1px solid black;">'.$this->pokepedia.'</th>
+        <td style="border-collapse:collapse;border:1px solid black;"><a href="'. $this->pokepedia .'" target="_blank">Mais Informações</a></th>
         </tr>
         
         </table>';
@@ -112,3 +122,9 @@ class Pokemon{
         return $this;
     }
 }
+
+
+?>
+
+
+
