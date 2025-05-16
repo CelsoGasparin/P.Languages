@@ -27,7 +27,7 @@ print_r($_POST);
 </head>
 <body>
     
-<div class="card" style="width: 32vh; border-radius: 25px;background-color:'..';color:'..';">
+<div class="card" style="border:10px solid red ;width: 32vh; border-radius: 25px;background-color:'..';color:'..';">
   <img class="card-img-top" style=" border-radius: 25px 25px 0px 0px;" src="https://avatars.githubusercontent.com/u/134729228?v=4&size=40/100px180/" alt="Card image cap">
   <div class="card-body " style="border-radius: 0px 0px 25px 25px;background-color: '..';">
       <h5 class="card-title text-'..'">'..'</h5>
