@@ -20,7 +20,7 @@ class Card{
 
 
 
-    public function __construct($tit,$des,$img,$col,$colT,$colD,$pt,bool $sem,bool $bor,$borCor){
+    public function __construct($tit,$des,$img,$col,$colT,$colD,$pt,$sem,$bor,$borCor){
         
         
         $this->title = $tit;
@@ -41,16 +41,18 @@ class Card{
 
     public function __toString(){
 
-        $this->border ? : ;
-        $html = '<div class="card" style="border:  ;width: 32vh; border-radius: 25px;background-color:'.$this->color.';color:'.$this->colorT.';">
-  <img class="card-img-top" style=" border-radius: 25px 25px 0px 0px;" src="https://avatars.githubusercontent.com/u/134729228?v=4&size=40/100px180/" alt="Card image cap">
+        $borSize =  $this->border ? '2px' : '0px';
+        $borCor = $this->border ? $this->borderColor : $this->color;
+        $html = '<div class="card" style="border: '. $borSize .' solid '. $borCor .'  ;width: 32vh; border-radius: 25px;background-color:'.$this->color.';color:'.$this->colorT.';">
+  <img class="card-img-top" style=" border-radius: 25px 25px 0px 0px;background-color: '.$this->color.';" src="'. $this->img .'/100px180/" alt="Card image cap">
   <div class="card-body " style="border-radius: 0px 0px 25px 25px;background-color: '.$this->color.';">
       <h5 class="card-title text-'.$this->posText.'">'.$this->title.'</h5>
       <p class="card-text text-'.$this->posText.'">'.$this->desc.'</p>
       <p class="card-text text-center" style="color: '.$this->colorD.';">'.$this->date.'</p>';
-      $html += $this->seeM ? '<a href="#" class="btn btn-primary">Ver Mais</a>':null;
-      $html+='</div>
+      $html .= $this->seeM ? '<a href="#" class="btn btn-primary">Ver Mais</a>': '';
+      $html.='</div>
         </div>';
+        return $html;
     }
 
 
