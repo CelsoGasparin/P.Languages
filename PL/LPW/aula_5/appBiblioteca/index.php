@@ -15,21 +15,49 @@ $stm2 = $conn->prepare($sql);
 $stm2->execute();
 $livros =  $stm2->fetchAll();
 // print_r($results);
+$erros = [];
+
+
+
 if(isset($_POST['title'])){
     // print"Deu Submit";
-
     $title = $_POST['title'];
     $genre = $_POST['genre'];
     $qtdPages = $_POST['pages'];
     $author = $_POST['author'];
 
-    print $title.'-'.$genre.'-'.$qtdPages.'-'.$author;
+    // $erros = [];
+    if($title=='' || (strlen($title) < 3 || strlen($title) > 50)){
+        $erros[] = 'informe um título válido.';
+    }if($qtdPages=='' || ($qtdPages<1 || $qtdPages > 10080)){
+        $erros[] = 'informe um número de páginas válido.';
+    }if($genre==''){
+        $erros[] = 'informe o gênero';
+    }if($author==''){
+        $erros[] = 'informe o autor';
+    }
+
+    if(count($erros) == 0){
+        
+        $sql = "SELECT titulo FROM livros WHERE titulo = ?";
+        $stm3 = $conn->prepare($sql);
+        $stm3->execute([$title]);
+        print_r();
+
+        if($stm3->fetchAll()){
+        
+        }
+        $sql = "INSERT INTO livros(titulo,genero,qtd_paginas,autor) values (?,?,?,?)";
+        $stm1 = $conn->prepare($sql);
+        $stm1->execute([$title,$genre,$qtdPages,$author]);
+        
+        header('location:index.php');
+
+    }
+
+    // print
+     $title.'-'.$genre.'-'.$qtdPages.'-'.$author;
     
-    $sql = "INSERT INTO livros(titulo,genero,qtd_paginas,autor) values (?,?,?,?)";
-    $stm1 = $conn->prepare($sql);
-    $stm1->execute([$title,$genre,$qtdPages,$author]);
-    
-    header('location:index.php');
     // var_dump($stm1);
     
 }
@@ -46,6 +74,7 @@ if(isset($_POST['title'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Livros</title>
+    
 </head>
 <body>
     
@@ -89,21 +118,24 @@ if(isset($_POST['title'])){
     ?>
     
     </table>
+    <div class="alerts" style="display: <?php count($erros) > 0 ? 'block': 'none';?>;background-color:red;border-radius:10px;text-align:center;width:30vh;">
+        <?=join('<br>',$erros);?>
+    </div>
 
     <h1>Formulário</h1>
-
+    <!-- <form action="" method="post" onsubmit="return validar();"> -->
     <form action="" method="post">
         <div style="margin-bottom: 10px;">
             <label for="title">Título:</label>
-            <input type="text" name="title" id="title" required>
+            <input type="text" name="title" id="title">
         </div>
         <div style="margin-bottom: 10px;">
             <label for="pages">Páginas:</label>
-            <input type="number" min="1" max="10080" name="pages" id="pages" required>
+            <input type="number" min="1" max="10080" name="pages" id="pages">
         </div>
         <div>
             <label for="genre">Gênero:</label>
-            <select name="genre" id="genre" required>
+            <select name="genre" id="genre">
                 <option value="" >--Selecione--</option>
                 <option value="D">Drama</option>
                 <option value="F">Ficção</option>
@@ -113,9 +145,11 @@ if(isset($_POST['title'])){
         </div>
         <div>
             <label for="author">Autor:</label>
-            <input type="text" name="author" id="author" required>
+            <input type="text" name="author" id="author">
         </div>
-        <button type="submit">Submit</button>
-    </form>     
+        <button type="submit" id="submit">Submit</button>
+    </form>
+    
+    <script src="js/validacao.js"></script>
 </body>
 </html>
