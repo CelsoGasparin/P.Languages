@@ -26,8 +26,17 @@ if(isset($_POST['title'])){
     $qtdPages = $_POST['pages'];
     $author = $_POST['author'];
 
+
+
+    $sql = "SELECT titulo FROM livros WHERE titulo = ?";
+    $stm3 = $conn->prepare($sql);
+    $stm3->execute([$title]);
+    $nomeRepetido = $stm3->fetchAll();
+
     // $erros = [];
-    if($title=='' || (strlen($title) < 3 || strlen($title) > 50)){
+    if(!($nomeRepetido===[])){
+        $erros[] ='Seu título é repetido!';
+    }if($title=='' || (strlen($title) < 3 || strlen($title) > 50)){
         $erros[] = 'informe um título válido.';
     }if($qtdPages=='' || ($qtdPages<1 || $qtdPages > 10080)){
         $erros[] = 'informe um número de páginas válido.';
@@ -42,16 +51,17 @@ if(isset($_POST['title'])){
         $sql = "SELECT titulo FROM livros WHERE titulo = ?";
         $stm3 = $conn->prepare($sql);
         $stm3->execute([$title]);
-        print_r();
-
-        if($stm3->fetchAll()){
-        
+        if($nomeRepetido===[]){
+            $sql = "INSERT INTO livros(titulo,genero,qtd_paginas,autor) values (?,?,?,?)";
+            $stm1 = $conn->prepare($sql);
+            $stm1->execute([$title,$genre,$qtdPages,$author]);
+            
         }
-        $sql = "INSERT INTO livros(titulo,genero,qtd_paginas,autor) values (?,?,?,?)";
-        $stm1 = $conn->prepare($sql);
-        $stm1->execute([$title,$genre,$qtdPages,$author]);
         
-        header('location:index.php');
+
+        
+        
+        // header('location:index.php');
 
     }
 
