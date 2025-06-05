@@ -48,9 +48,7 @@ if(isset($_POST['title'])){
 
     if(count($erros) == 0){
         
-        $sql = "SELECT titulo FROM livros WHERE titulo = ?";
-        $stm3 = $conn->prepare($sql);
-        $stm3->execute([$title]);
+    
         if($nomeRepetido===[]){
             $sql = "INSERT INTO livros(titulo,genero,qtd_paginas,autor) values (?,?,?,?)";
             $stm1 = $conn->prepare($sql);
