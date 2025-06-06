@@ -17,7 +17,10 @@ $livros =  $stm2->fetchAll();
 // print_r($results);
 $erros = [];
 
-
+$title = "";
+$qtdPages = "";
+$genre = "";
+$author = "";
 
 if(isset($_POST['title'])){
     // print"Deu Submit";
@@ -25,7 +28,7 @@ if(isset($_POST['title'])){
     $genre = $_POST['genre'];
     $qtdPages = $_POST['pages'];
     $author = $_POST['author'];
-
+    $trimTitle = trim($title);
 
 
     $sql = "SELECT titulo FROM livros WHERE titulo = ?";
@@ -34,32 +37,28 @@ if(isset($_POST['title'])){
     $nomeRepetido = $stm3->fetchAll();
 
     // $erros = [];
-    if(!($nomeRepetido===[])){
-        $erros[] ='Seu título é repetido!';
-    }if($title=='' || (strlen($title) < 3 || strlen($title) > 50)){
+    
+    if($trimTitle=='' || (strlen($trimTitle) < 3 || strlen($trimTitle) > 50)){
         $erros[] = 'informe um título válido.';
-    }if($qtdPages=='' || ($qtdPages<1 || $qtdPages > 10080)){
+    }elseif($nomeRepetido!==[]){
+        $erros[] ='Seu título é repetido!';
+    }
+    if($qtdPages=='' || ($qtdPages<1 || $qtdPages > 10080)){
         $erros[] = 'informe um número de páginas válido.';
     }if($genre==''){
         $erros[] = 'informe o gênero';
-    }if($author==''){
+    }if(trim($author)==''){
         $erros[] = 'informe o autor';
     }
 
     if(count($erros) == 0){
         
-    
-        if($nomeRepetido===[]){
-            $sql = "INSERT INTO livros(titulo,genero,qtd_paginas,autor) values (?,?,?,?)";
-            $stm1 = $conn->prepare($sql);
-            $stm1->execute([$title,$genre,$qtdPages,$author]);
-            
-        }
-        
-
+        $sql = "INSERT INTO livros(titulo,genero,qtd_paginas,autor) values (?,?,?,?)";
+        $stm1 = $conn->prepare($sql);
+        $stm1->execute([$title,$genre,$qtdPages,$author]);
         
         
-        // header('location:index.php');
+        header('location:index.php');
 
     }
 
@@ -126,7 +125,7 @@ if(isset($_POST['title'])){
     ?>
     
     </table>
-    <div class="alerts" style="display: <?php count($erros) > 0 ? 'block': 'none';?>;background-color:red;border-radius:10px;text-align:center;width:30vh;">
+    <div class="alerts" style="background-color:red;border-radius:10px;text-align:center;width:30vh;">
         <?=join('<br>',$erros);?>
     </div>
 
@@ -135,25 +134,25 @@ if(isset($_POST['title'])){
     <form action="" method="post">
         <div style="margin-bottom: 10px;">
             <label for="title">Título:</label>
-            <input type="text" name="title" id="title">
+            <input type="text" name="title" id="title" value="<?= $title ?>">
         </div>
         <div style="margin-bottom: 10px;">
             <label for="pages">Páginas:</label>
-            <input type="number" min="1" max="10080" name="pages" id="pages">
+            <input type="number" min="1" max="10080" name="pages" id="pages" value="<?= $qtdPages ?>">
         </div>
         <div>
             <label for="genre">Gênero:</label>
-            <select name="genre" id="genre">
-                <option value="" >--Selecione--</option>
-                <option value="D">Drama</option>
-                <option value="F">Ficção</option>
-                <option value="R">Romance</option>
-                <option value="O">Outro</option>
+            <select name="genre" id="genre" >
+                <option value="">--Selecione--</option>
+                <option value="D" <?= $genre=='D' ? 'selected' : null ;?>>Drama</option>
+                <option value="F" <?= $genre=='F' ? 'selected' : null ;?>>Ficção</option>
+                <option value="R" <?= $genre=='R' ? 'selected' : null ;?>>Romance</option>
+                <option value="O" <?= $genre=='O' ? 'selected' : null ;?>>Outro</option>
             </select>
         </div>
         <div>
             <label for="author">Autor:</label>
-            <input type="text" name="author" id="author">
+            <input type="text" name="author" id="author" value="<?= $author ?>">
         </div>
         <button type="submit" id="submit">Submit</button>
     </form>
