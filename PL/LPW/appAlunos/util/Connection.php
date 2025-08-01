@@ -7,7 +7,7 @@ class Connection {
 
     private static $conn = null;
 
-    public static function getConnection() {
+    public static function getConn() {
 
         if(self::$conn == null) {
             try {
